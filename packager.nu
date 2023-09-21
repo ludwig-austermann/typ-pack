@@ -11,7 +11,7 @@ def create_folder_if_missing [p: string] {
 def special_copy [p: string, packp: string] {
     let dir = ([$packp ($p | path dirname)] | str join '\')
     create_folder_if_missing $dir
-    cp $p $dir
+    cp $p $dir --update
 }
 
 let package_name = (open typst.toml | get package | get name)
@@ -27,8 +27,8 @@ let package_path = ([ $typst_package_path $package_name $package_version ] | str
 
 create_folder_if_missing $package_path
 
-try { cp LICENSE $package_path } catch { print $'(ansi red)File `LICENSE` is missing. It is required by typst packages.' }
-try { cp README.md $package_path } catch { print $'(ansi red)File `README.md` is missing. It is required by typst packages.' }
+try { cp LICENSE $package_path --update } catch { print $'(ansi red)File `LICENSE` is missing. It is required by typst packages.' }
+try { cp README.md $package_path --update } catch { print $'(ansi red)File `README.md` is missing. It is required by typst packages.' }
 # copy typst.toml
 open typst.toml | get package | save ([$package_path "typst.toml"] | str join '\') --force
 # copy entrypoint
