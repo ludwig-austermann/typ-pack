@@ -47,7 +47,7 @@ create_folder_if_missing $package_path
 
 try { cp LICENSE $package_path --update } catch { print $'(ansi red)[Packaging] File `LICENSE` is missing. It is required by typst packages.' }
 try {
-    open README.md | str replace "{{PACKAGE VERSION}}" $package_version --all | save ($package_path + "/README.md")
+    open README.md | str replace "{{PACKAGE VERSION}}" $package_version --all | save ($package_path + "/README.md") --force
 } catch { print $'(ansi red)[Packaging] File `README.md` is missing. It is required by typst packages.' }
 # copy typst.toml
 $typst_toml | select package | save ($package_path + '\typst.toml') --force
